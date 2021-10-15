@@ -813,7 +813,7 @@ function setArticleRead( server, id, read )
   Internal functions
  */
 
-var DBVERSION = "0.3"
+var DBVERSION = "0.4"
 var _db = null;
 
 function getDatabase()
@@ -940,8 +940,22 @@ function _updateSchema_v4( db )
 {
     db.transaction(
         function( tx ) {
-            tx.executeSql( "ALTER TABLE servers ADD COLUMN fetchUnread INTEGER DEFAULT 0" );
-            tx.executeSql( "UPDATE servers SET fetchUnread=0" );
+            tx.executeSql(
+                            "CREATE TABLE IF NOT EXISTS servers_next (" +
+                            "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                            "name TEXT NOT NULL, " +
+                            "url TEXT NOT NULL, " +
+                            "user TEXT NOT NULL, " +
+                            "password TEXT NOT NULL, " +
+                            "clientId TEXT NOT NULL, " +
+                            "clientSecret TEXT NOT NULL, " +
+                            "lastSync INTEGER DEFAULT 0," +
+                            "fetchUnread INTEGER DEFAULT 0" +
+                            ")"
+                         );
+            tx.executeSql( "INSERT INTO servers_next SELECT * FROM servers" );
+            tx.executeSql( "DROP TABLE servers" );
+            tx.executeSql( "ALTER TABLE servers_next RENAME TO servers" );
 
             db.changeVersion( db.version, "0.4" );
         }
