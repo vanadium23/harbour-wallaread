@@ -21,6 +21,7 @@
 
 .pragma library
 .import QtQuick.LocalStorage 2.0 as Storage
+.import "sha1.js" as Crypto
 
 /*
   Exposed variables
@@ -336,22 +337,29 @@ function syncDeletedArticles( props, cb )
 
             function _checkNextArticle() {
                 working = true;
-                var article = articles.pop();
 
                 var url = props.url;
                 if ( url.charAt( url.length - 1 ) !== "/" )
                     url += "/";
                 url += "api/entries/exists.json";
 
-                var params = "url=";
-                params += encodeURIComponent( article.url );
-                url += "?" + params;
+                var n = 20;
+                var articeHashedUrls = "";
+                var articleToCheck = {};
+                while (articles.length > 0 && n > 0) {
+                    var article = articles.pop();
+                    var hashedUrl = Crypto.sha1(article.url);
+                    articleToCheck += "&hashed_urls[]=" + hashedUrl;
+                    articleToCheck[hashedUrl] = article.id;
+                    n--;
+                }
+                url += "?return_id=1" + articleToCheck;
 
                 var http = new XMLHttpRequest;
 
                 http.onreadystatechange = function() {
                     if ( http.readyState === XMLHttpRequest.DONE ) {
-                        console.debug( "Checking if article " + article.id + " exists, response status is " + http.status );
+                        console.debug( "Checking if article exists, response status is " + http.status );
                         var json = null;
 
                         if ( http.status === 200 ) {
@@ -362,9 +370,18 @@ function syncDeletedArticles( props, cb )
                                 json = null;
                             }
 
-                            if ( !json.exists ) {
-                                console.debug( "Article " + article.id + " has been deleted" );
-                                deleteArticle( props.id, article.id );
+                            console.debug("Server response: " + http.responseText);
+
+                            if ( json !== null ) {
+                                for (var key in json) {
+                                    if (json.hasOwnProperty(key)) {
+                                        if (json[key] === null) {
+                                            var articleId = articleToCheck[key];
+                                            console.debug( "Article " + articleId + " has been deleted" );
+                                            deleteArticle( props.id, articleId );
+                                        }
+                                    }
+                                }
                             }
                         }
                         // In case of error let's assume that the article exists
@@ -627,10 +644,13 @@ function downloadArticles( props, cb )
                 cb( null, err )
             }
             else {
-                if ( arts.length )
+                if ( arts.length ) {
                     articles.push.apply( articles, arts );
-                if ( done )
-                    embedImages( articles, cb );
+                    cb(arts, null);
+                }
+                cb([], null);
+//                if ( done )
+//                    embedImages( articles, cb );
             }
         }
     );

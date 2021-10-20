@@ -233,19 +233,19 @@
     <name>WallaBase</name>
     <message>
         <source>Server not found in the configuration</source>
-        <translation>Impossible de trouver la configuration du serveur</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Failed to parse server response: </source>
-        <translation>Impossible d&apos;interpréter la réponse du serveur : </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Server reply was </source>
-        <translation>Le serveur a répondu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Article not found in the cache</source>
-        <translation>Article absent du cache</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
