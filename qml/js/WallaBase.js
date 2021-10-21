@@ -330,8 +330,8 @@ function syncDeletedArticles( props, cb )
                 }
                 else {
                     if ( !working )
-                        _timerSource.setTimeout( _checkNextArticle, 100 );
-                    _timerSource.setTimeout( processArticlesList, 500 );
+                        _timerSource.setTimeout( _checkNextArticle, 200 );
+                    _timerSource.setTimeout( processArticlesList, 500 + articles.length );
                 }
             }
 
@@ -355,6 +355,8 @@ function syncDeletedArticles( props, cb )
                 }
                 url += "?return_id=1" + articleToCheck;
 
+                console.debug("Articles left to check: " + articles.length);
+
                 var http = new XMLHttpRequest;
 
                 http.onreadystatechange = function() {
@@ -369,8 +371,6 @@ function syncDeletedArticles( props, cb )
                             catch( e ) {
                                 json = null;
                             }
-
-                            console.debug("Server response: " + http.responseText);
 
                             if ( json !== null ) {
                                 for (var key in json) {
@@ -398,7 +398,7 @@ function syncDeletedArticles( props, cb )
                 http.send();
             }
 
-            _timerSource.setTimeout( processArticlesList, 500 );
+            _timerSource.setTimeout( processArticlesList, 500 + articles.length );
         }
     );
 }
