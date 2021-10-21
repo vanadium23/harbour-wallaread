@@ -20,16 +20,18 @@
  */
 
 import QtQuick 2.0
+import Sailfish.WebView 1.0
+import Sailfish.WebEngine 1.0
 import Sailfish.Silica 1.0
 
-Page {
+WebViewPage {
     id: articlePage
     allowedOrientations: Orientation.All
 
     property string title
     property string content
 
-    SilicaWebView {
+    WebView {
         id: webview
         anchors.fill: parent
 
@@ -40,11 +42,14 @@ Page {
 
     function wrapArticleContent() {
         var html =
+            '<!DOCTYPE html>' +
             "<html>" +
             "<head>" +
+                '<meta name="viewport" content="initial-scale=1.0">' +
                 "<style type=\"text/css\">" +
                 "article { font-family: sans-serif; font-size: 16px; }" +
                 "article h1 { font-size: 32px; }" +
+                "article img { max-width: 100%; height: auto; }" +
                 "</style>" +
             "</head>" +
             "<body>" +
