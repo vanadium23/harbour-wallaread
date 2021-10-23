@@ -403,7 +403,7 @@ function syncDeletedArticles( props, cb )
     );
 }
 
-function getArticles( serverId, cb, filter, sortOrder, sortAsc )
+function getArticles( cb, filter, sortOrder, sortAsc )
 {
     var db = getDatabase();
 
@@ -437,7 +437,7 @@ function getArticles( serverId, cb, filter, sortOrder, sortAsc )
             }
 
             try {
-                var res = tx.executeSql( "SELECT * FROM articles WHERE server=?" + where + order, [ serverId ] );
+                var res = tx.executeSql( "SELECT * FROM articles WHERE 1=1" + where + order );
                 for ( var i = 0; i < res.rows.length; ++i ) {
                     articles.push( res.rows[i] );
                 }

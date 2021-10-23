@@ -46,15 +46,10 @@ DISTFILES += \
     qml/js/WallaBase.js \
     qml/js/sha1.js \
     qml/models/ArticlesModel.qml \
-    qml/models/ServersModel.qml \
     qml/pages/ArticlePage.qml \
-    qml/pages/ServerPage.qml \
-    qml/pages/ServerSettingsDialog.qml \
-    qml/pages/ServerSettingsPage.qml \
-    qml/pages/ServersPage.qml \
+    qml/pages/ArticlesPage.qml \
     qml/pages/SettingsPage.qml \
     qml/types/Server.qml \
-    qml/types/ServerSettings.qml \
     rpm/harbour-wallaread.changes \
     qml/pages/ServerPageShowDialog.qml \
     qml/types/ServerPageShowPreferences.qml \

@@ -30,12 +30,10 @@ Page {
     id: serverPage
     allowedOrientations: Orientation.All
 
-    property int serverId
     property alias server: server
 
     Server {
         id: server
-        serverId: serverPage.serverId
 
         onArticlesDownloaded: {
             serverPage.updateArticlesList()
@@ -63,7 +61,7 @@ Page {
     }
 
     function updateArticlesList() {
-        articlesModel.load( serverId )
+        articlesModel.load()
     }
 
     function showError( message ) {
@@ -276,6 +274,13 @@ Page {
         model: articlesModel
 
         PullDownMenu {
+            MenuItem {
+                text: qsTr("Settings")
+                onClicked: {
+                    var page = pageStack.push( Qt.resolvedUrl( "SettingsPage.qml" ) )
+                }
+            }
+
             MenuItem {
                 text: qsTr( "Sort: " ) + sortPreferences.getVisibleDescription()
                 onClicked: {

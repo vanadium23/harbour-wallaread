@@ -27,7 +27,6 @@ import "../js/WallaBase.js" as WallaBase
 Item {
     id: server
 
-    property int serverId: -1
     property string name
     property string url
     property int lastSync: 0
@@ -41,37 +40,8 @@ Item {
     signal connected
     signal error( string message )
 
-    onServerIdChanged: {
-        if ( serverId !== -1 ) {
-            console.debug( "Loading information for server " + serverId )
-            WallaBase.getServer( serverId, onServerLoaded )
-        }
-        else {
-            name = null
-            url = null
-            lastSync = 0
-            accessToken = null
-            refreshToken = null
-            tokenType = null
-            tokenExpiry = 0
-            fetchUnread = false
-        }
-    }
-
     HttpRequester {
         id: httpRequester
-    }
-
-    function onServerLoaded( props, err ) {
-        if ( err !== null ) {
-            error( qsTr( "Failed to load server information: " ) + err )
-        }
-        else {
-            name = props.name
-            url = props.url
-            lastSync = props.lastSync
-            fetchUnread = props.fetchUnread === 1
-        }
     }
 
     function connect( cb ) {

@@ -2,6 +2,41 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>ArticlesPage</name>
+    <message>
+        <source>Add article</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Article URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No articles saved on this server yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <source>WallaRead</source>

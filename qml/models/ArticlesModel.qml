@@ -50,7 +50,7 @@ ListModel {
                 filter |= WallaBase.ArticlesFilter.Starred
         }
 
-        WallaBase.getArticles( serverId, onArticlesLoaded, filter, sortOrder, sortAsc )
+        WallaBase.getArticles( onArticlesLoaded, filter, sortOrder, sortAsc )
     }
 
     function onArticlesLoaded( articles, err ) {

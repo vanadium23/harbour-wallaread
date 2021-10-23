@@ -55,7 +55,7 @@ ApplicationWindow
         WallaBase.setImageEmbedder( imageEmbedder )
     }
 
-    initialPage: Component { ServerPage { } }
+    initialPage: Component { ArticlesPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations
 }
