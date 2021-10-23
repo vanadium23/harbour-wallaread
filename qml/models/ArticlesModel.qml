@@ -35,7 +35,7 @@ ListModel {
 
     signal error( string message )
 
-    function load( serverId ) {
+    function load( ) {
         loaded = false
         var filter = 0;
 

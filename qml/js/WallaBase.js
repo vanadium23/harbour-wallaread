@@ -65,189 +65,30 @@ function setImageEmbedder( embedder )
   Servers management
  */
 
-function getServers( cb )
+
+function connectToServer( settings, cb )
 {
-    var db = getDatabase();
+    var props = {
+        url: settings.base_url,
+        user: settings.username,
+        password: settings.password,
+        clientId: settings.client_id,
+        clientSecret: settings.client_secret
+    };
 
-    db.readTransaction(
-        function( tx ) {
-            var servers = new Array;
-            var err = null;
+    console.debug("Formed props for auth request: " + JSON.stringify(props));
 
-            try {
-                var res = tx.executeSql( "SELECT id, name FROM servers ORDER BY NAME" );
-                for ( var i = 0; i < res.rows.length; ++i ) {
-                    var current = res.rows.item( i );
-                    var server = { id: current.id, name: current.name, unread: 0 };
-                    var countRes = tx.executeSql( "SELECT COUNT(*) as count FROM articles WHERE server=? AND archived=0", [ current.id ] );
-                    server.unread = countRes.rows[0].count;
-                    servers.push( server );
-                }
-            }
-            catch( e ) {
-                err = e.message;
-            }
-
-            cb( servers, err );
-        }
-    );
-}
-
-function getServer( id, cb )
-{
     var err = null;
-    var db = getDatabase();
+    try {
+       _sendAuthRequest( props, cb );
+    }
+    catch( e ) {
+        err = e.message;
+    }
 
-    db.readTransaction(
-        function( tx ) {
-            var server = null;
-            try {
-                var res = tx.executeSql( "SELECT id, name, url, lastSync, fetchUnread FROM servers WHERE id=?", [ id ] );
-                if ( res.rows.length === 0 ) {
-                    err = qsTr( "Server not found in the configuration" );
-                }
-                else {
-                    server = res.rows.item( 0 );
-                }
-            }
-            catch( e ) {
-                err = e.message;
-            }
+    if ( err !== null )
+        cb( null, err );
 
-            cb( server, err );
-        }
-    );
-}
-
-function getServerSettings( id, cb )
-{
-    var err = null;
-    var db = getDatabase();
-
-    db.readTransaction(
-        function( tx ) {
-            var server = null;
-            try {
-                var res = tx.executeSql( "SELECT * FROM servers WHERE id=?", [ id ] );
-                if ( res.rows.length === 0 ) {
-                    err = qsTr( "Server not found in the configuration" );
-                }
-                else {
-                    server = res.rows.item( 0 );
-                }
-            }
-            catch( e ) {
-                err = e.message;
-            }
-
-            cb( server, err );
-        }
-    );
-}
-
-function addNewServer( props )
-{
-    var db = getDatabase();
-
-    db.transaction(
-        function( tx ) {
-            // TODO: try/catch here when error management is in place in the UI
-            tx.executeSql( "INSERT INTO servers(name, url, user, password, clientId, clientSecret, fetchUnread) VALUES(?, ?, ?, ?, ?, ?, ?)",
-                           [
-                              props.name,
-                              props.url,
-                              props.user,
-                              props.password,
-                              props.clientId,
-                              props.clientSecret,
-                              props.fetchUnread ? 1 : 0
-                           ]
-                         );
-        }
-    );
-}
-
-function updateServer( id, props )
-{
-    var db = getDatabase();
-
-    db.transaction(
-        function( tx ) {
-            // TODO: try/catch here when error management is in place in the UI
-            tx.executeSql( "UPDATE servers SET " +
-                           "name=?, " +
-                           "url=?, " +
-                           "user=?, " +
-                           "password=?, " +
-                           "clientId=?, " +
-                           "clientSecret=?, " +
-                           "fetchUnread=? " +
-                           "WHERE id=?",
-                           [
-                              props.name,
-                              props.url,
-                              props.user,
-                              props.password,
-                              props.clientId,
-                              props.clientSecret,
-                              props.fetchUnread ? 1 : 0,
-                              id
-                           ]
-                         );
-        }
-    );
-}
-
-function deleteServer( id )
-{
-    var db = getDatabase();
-
-    db.transaction(
-        function( tx ) {
-            console.debug( "Deleting server " + id );
-            // TODO: try/catch here when error management is in place in the UI
-            tx.executeSql( "DELETE FROM articles WHERE server=?", [ id ] );
-            tx.executeSql( "DELETE FROM servers WHERE id=?", [ id ] );
-        }
-    );
-}
-
-function setServerLastSync( id, last )
-{
-    var db = getDatabase();
-
-    db.transaction(
-        function( tx ) {
-            tx.executeSql( "UPDATE servers SET lastSync=? WHERE id=?", [ last, id ] );
-        }
-
-    )
-}
-
-function connectToServer( id, cb )
-{
-    var db = getDatabase();
-
-    db.readTransaction(
-        function( tx ) {
-            var err = null;
-            try {
-                var res = tx.executeSql( "SELECT url, user, password, clientId, clientSecret FROM servers WHERE id=?", [ id ] );
-                if ( res.rows.length === 0 ) {
-                    err = qsTr( "Server not found in the configuration" );
-                }
-                else {
-                    _sendAuthRequest( res.rows.item( 0 ), cb );
-                }
-            }
-            catch( e ) {
-                err = e.message;
-            }
-
-            if ( err !== null )
-                cb( null, err );
-        }
-    );
 }
 
 function _sendAuthRequest( props, cb )
@@ -315,7 +156,7 @@ function syncDeletedArticles( props, cb )
 
     db.readTransaction(
         function( tx ) {
-            var res = tx.executeSql( "SELECT id, url FROM articles WHERE server=?", [ props.id ] );
+            var res = tx.executeSql( "SELECT id, url FROM articles");
             var articles = new Array;
 
             for ( var i = 0; i < res.rows.length; ++i ) {
@@ -480,7 +321,6 @@ function articleExists( server, id, cb )
 function saveArticle( props )
 {
     articleExists(
-        props.server,
         props.id,
         function( exists, err ) {
             if ( err !== null ) {
@@ -506,10 +346,9 @@ function _insertArticle( props )
     db.transaction(
         function( tx ) {
             tx.executeSql(
-                            "INSERT INTO articles(id,server,created,updated,mimetype,language,readingTime,url,domain,archived,starred,title,content) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                            "INSERT INTO articles(id,created,updated,mimetype,language,readingTime,url,domain,archived,starred,title,content) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
                             [
                                 props.id,
-                                props.server,
                                 props.created,
                                 props.updated,
                                 props.mimetype,
@@ -534,7 +373,7 @@ function _updateArticle( props )
     db.transaction(
         function( tx ) {
             tx.executeSql(
-                            "UPDATE articles SET created=?, updated=?, mimetype=?, language=?, readingTime=?, url=?, domain=?, archived=?, starred=?, title=?, content=? WHERE id=? AND server=?",
+                            "UPDATE articles SET created=?, updated=?, mimetype=?, language=?, readingTime=?, url=?, domain=?, archived=?, starred=?, title=?, content=? WHERE id=?",
                             [
                                 props.created,
                                 props.updated,
@@ -547,8 +386,7 @@ function _updateArticle( props )
                                 props.starred,
                                 props.title,
                                 props.content,
-                                props.id,
-                                props.server
+                                props.id
                             ]
                          );
         }

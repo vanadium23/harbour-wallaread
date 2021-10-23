@@ -53,10 +53,6 @@
 <context>
     <name>Server</name>
     <message>
-        <source>Failed to load server information: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Failed to connect to server: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -78,37 +74,6 @@
     </message>
     <message>
         <source>Failed to upload article: </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ServerPage</name>
-    <message>
-        <source>Article URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No articles saved on this server yet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add article</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sort: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -177,98 +142,6 @@
     </message>
 </context>
 <context>
-    <name>ServerSettings</name>
-    <message>
-        <source>Failed to load server settings: </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ServerSettingsDialog</name>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Server Alias</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Server URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Login</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>User Login</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Client ID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Client Secret</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fetch unread/archived articles</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ServerSettingsPage</name>
-    <message>
-        <source>New Server</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No server found, use the pulley menu and select &apos;New Server&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ServersPage</name>
-    <message>
-        <source>Reset database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wallabag servers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No servers configured yet, create your first one with the Settings menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resetting database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Old Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SettingsPage</name>
     <message>
         <source>Save</source>
@@ -301,10 +174,6 @@
 </context>
 <context>
     <name>WallaBase</name>
-    <message>
-        <source>Server not found in the configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Failed to parse server response: </source>
         <translation type="unfinished"></translation>

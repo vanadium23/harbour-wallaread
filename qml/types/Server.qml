@@ -47,10 +47,10 @@ Item {
     function connect( cb ) {
         var now = Math.floor( (new Date).getTime() / 1000 )
         if ( tokenExpiry <= now ) {
-            console.debug( "Opening connection for server " + serverId )
             WallaBase.connectToServer(
-                serverId,
+                settings,
                 function( props, err ) {
+                    props.url = settings.base_url;
                     onConnectionDone( props, err, cb )
                 }
             )
@@ -62,7 +62,7 @@ Item {
 
     function onConnectionDone( props, err, cb ) {
         if ( err === null ) {
-            console.debug( "Successfully connected to server " + serverId )
+            console.debug( "Successfully connected to server " + props.url )
             accessToken = props.access_token
             refreshToken = props.refresh_token
             tokenType = props.token_type
@@ -84,7 +84,7 @@ Item {
                     cb()
                 }
                 else {
-                    WallaBase.syncDeletedArticles( { id: serverId, token: accessToken, url: url }, function() { cb(); } )
+                    WallaBase.syncDeletedArticles( { token: accessToken, url: url }, function() { cb(); } )
                 }
             }
         )
@@ -121,7 +121,6 @@ Item {
                 var current = articles[i];
                 var article = {
                     id: current.id,
-                    server: serverId,
                     created: current.created_at,
                     updated: current.updated_at,
                     mimetype: current.mimetype,
@@ -139,7 +138,7 @@ Item {
                 ret.push( article )
             }
 
-            WallaBase.setServerLastSync( serverId, Math.floor( (new Date).getTime() / 1000 ) )
+//            WallaBase.setServerLastSync( serverId, Math.floor( (new Date).getTime() / 1000 ) )
         }
 
         articlesDownloaded( ret )
@@ -175,7 +174,6 @@ Item {
         else {
             var article = {
                 id: current.id,
-                server: serverId,
                 created: current.created_at,
                 updated: current.updated_at,
                 mimetype: current.mimetype,
