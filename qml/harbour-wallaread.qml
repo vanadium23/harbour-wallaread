@@ -25,7 +25,7 @@ import Sailfish.Silica 1.0
 import harbour.wallaread 1.0
 
 import "pages"
-
+import "common"
 import "./js/WallaBase.js" as WallaBase
 
 ApplicationWindow
@@ -42,6 +42,10 @@ ApplicationWindow
         }
     }
 
+    Settings {
+        id: settings
+    }
+
     ImageEmbedder {
         id: imageEmbedder
     }
@@ -51,7 +55,7 @@ ApplicationWindow
         WallaBase.setImageEmbedder( imageEmbedder )
     }
 
-    initialPage: Component { ServersPage { } }
+    initialPage: Component { ServerPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations
 }

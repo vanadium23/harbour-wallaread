@@ -188,6 +188,21 @@
     </message>
 </context>
 <context>
+    <name>ServerSettingsPage</name>
+    <message>
+        <source>New Server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No server found, use the pulley menu and select &apos;New Server&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ServersPage</name>
     <message>
         <source>Reset database</source>
@@ -213,19 +228,39 @@
         <source>Deleting</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Old Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
     <message>
-        <source>New Server</source>
+        <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Settings</source>
+        <source>URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No server found, use the pulley menu and select &apos;New Server&apos;</source>
+        <source>Server URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User Login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Client ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Client Secret</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

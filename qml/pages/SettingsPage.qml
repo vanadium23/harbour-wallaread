@@ -1,92 +1,85 @@
-/*
- * WallaRead - A Wallabag 2+ client for SailfishOS
- * © 2016 Grégory Oestreicher <greg@kamago.net>
- *
- * This file is part of WallaRead.
- *
- * WallaRead is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * WallaRead is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with WallaRead.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
-
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import "../models"
-
-Page {
-    id: settingsPage
+Dialog {
+    id: settingsDialog
     allowedOrientations: Orientation.All
 
-    signal serverListChanged
-
-    onServerListChanged: updateServerList()
-
-    ServersModel {
-        id: serversModel
-    }
-
-    function updateServerList() {
-        serversModel.load()
-    }
-
-    Component.onCompleted: {
-        updateServerList()
-    }
-
-    SilicaListView {
+    SilicaFlickable {
         anchors.fill: parent
-        spacing: Theme.paddingMedium
+        contentHeight: column.height
+        width: parent.width
 
-        model: serversModel
-
-        PullDownMenu {
-            MenuItem {
-                text: qsTr( "New Server" )
-                onClicked: {
-                    var dlg = pageStack.push( Qt.resolvedUrl( "ServerSettingsDialog.qml" ), { serverId: -1 } )
-                    dlg.accepted.connect( serverListChanged )
-                }
-            }
-        }
-
-        header: PageHeader {
-            title: qsTr( "Settings" )
-        }
-
-        ViewPlaceholder {
-            enabled: serversModel.loaded && serversModel.count == 0
-            text: qsTr( "No server found, use the pulley menu and select 'New Server'" )
-        }
-
-        delegate: ListItem {
-            id: listEntry
+        Column {
+            id: column
             width: parent.width
 
-            Label {
-                x: Theme.horizontalPageMargin
-                anchors.verticalCenter: parent.verticalCenter
-                color: listEntry.highlighted ? Theme.highlightColor : Theme.primaryColor
-                text: model.name
+            DialogHeader {
+                acceptText: qsTr( "Save" )
             }
 
-            onClicked: {
-                var dlg = pageStack.push( Qt.resolvedUrl( "ServerSettingsDialog.qml" ), { serverId: model.id } )
-                dlg.accepted.connect( serverListChanged )
+            TextField {
+                id: urlField
+                width: parent.width
+                label: qsTr( "URL" )
+                placeholderText: qsTr( "Server URL" )
+                text: settings.base_url
+                inputMethodHints: Qt.ImhUrlCharactersOnly
+                EnterKey.enabled: text.length > 0
+                EnterKey.onClicked: userField.focus = true
             }
+
+            TextField {
+                id: userField
+                width: parent.width
+                label: qsTr( "Login" )
+                placeholderText: qsTr( "User Login" )
+                text: settings.username
+                inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
+                EnterKey.enabled: text.length > 0
+                EnterKey.onClicked: passwordField.focus = true
+            }
+
+            PasswordField {
+                id: passwordField
+                width: parent.width
+                label: "Password"
+                text: settings.password
+                EnterKey.enabled: text.length > 0
+                EnterKey.onClicked: clientIdField.focus = true
+            }
+
+            TextField {
+                id: clientIdField
+                width: parent.width
+                label: qsTr( "Client ID" )
+                placeholderText: qsTr( "Client ID" )
+                text: settings.client_id
+                inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase | Qt.ImhSensitiveData
+                EnterKey.enabled: text.length > 0
+                EnterKey.onClicked: clientSecretField.focus = true
+            }
+
+            TextField {
+                id: clientSecretField
+                width: parent.width
+                label: qsTr( "Client Secret" )
+                placeholderText: qsTr( "Client Secret" )
+                text: settings.client_secret
+                inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase | Qt.ImhSensitiveData
+            }
+
+            VerticalScrollDecorator {}
         }
+    }
 
-        VerticalScrollDecorator {
+    onDone: {
+        if (result == DialogResult.Accepted) {
+            settings.base_url = urlField.text
+            settings.username = userField.text
+            settings.password = passwordField.text
+            settings.client_id = clientIdField.text
+            settings.client_secret = clientSecretField.text
         }
     }
 }

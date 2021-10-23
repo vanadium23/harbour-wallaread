@@ -188,6 +188,21 @@
     </message>
 </context>
 <context>
+    <name>ServerSettingsPage</name>
+    <message>
+        <source>New Server</source>
+        <translation type="unfinished">Nouveau serveur</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Paramètres</translation>
+    </message>
+    <message>
+        <source>No server found, use the pulley menu and select &apos;New Server&apos;</source>
+        <translation type="unfinished">Aucun serveur trouvé, utilisez le menu coulissant et sélectionnez &apos;Nouveau serveur&apos;</translation>
+    </message>
+</context>
+<context>
     <name>ServersPage</name>
     <message>
         <source>Reset database</source>
@@ -213,20 +228,40 @@
         <source>Deleting</source>
         <translation>Suppression</translation>
     </message>
+    <message>
+        <source>Old Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
     <message>
-        <source>New Server</source>
-        <translation>Nouveau serveur</translation>
+        <source>Save</source>
+        <translation type="unfinished">Enregistrer</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation>Paramètres</translation>
+        <source>URL</source>
+        <translation type="unfinished">URL</translation>
     </message>
     <message>
-        <source>No server found, use the pulley menu and select &apos;New Server&apos;</source>
-        <translation>Aucun serveur trouvé, utilisez le menu coulissant et sélectionnez &apos;Nouveau serveur&apos;</translation>
+        <source>Server URL</source>
+        <translation type="unfinished">URL du serveur</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished">Login</translation>
+    </message>
+    <message>
+        <source>User Login</source>
+        <translation type="unfinished">Login utilisateur</translation>
+    </message>
+    <message>
+        <source>Client ID</source>
+        <translation type="unfinished">ID du client</translation>
+    </message>
+    <message>
+        <source>Client Secret</source>
+        <translation type="unfinished">Secret du client</translation>
     </message>
 </context>
 <context>

@@ -77,10 +77,17 @@ Page {
             }
 
             MenuItem {
-                text: qsTr( "Settings" )
+                text: qsTr( "Old Settings" )
+                onClicked: {
+                    var page = pageStack.push( Qt.resolvedUrl( "ServerSettingsPage.qml" ) )
+                    page.serverListChanged.connect( updateServerList )
+                }
+            }
+
+            MenuItem {
+                text: qsTr("Settings")
                 onClicked: {
                     var page = pageStack.push( Qt.resolvedUrl( "SettingsPage.qml" ) )
-                    page.serverListChanged.connect( updateServerList )
                 }
             }
         }

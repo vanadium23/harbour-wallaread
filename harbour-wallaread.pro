@@ -42,6 +42,7 @@ HEADERS += \
     src/imageembedder.h
 
 DISTFILES += \
+    qml/common/Settings.qml \
     qml/js/WallaBase.js \
     qml/js/sha1.js \
     qml/models/ArticlesModel.qml \
@@ -49,6 +50,7 @@ DISTFILES += \
     qml/pages/ArticlePage.qml \
     qml/pages/ServerPage.qml \
     qml/pages/ServerSettingsDialog.qml \
+    qml/pages/ServerSettingsPage.qml \
     qml/pages/ServersPage.qml \
     qml/pages/SettingsPage.qml \
     qml/types/Server.qml \
