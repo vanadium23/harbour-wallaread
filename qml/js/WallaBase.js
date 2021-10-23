@@ -278,12 +278,13 @@ function getArticles( cb, filter, sortOrder, sortAsc )
             }
 
             try {
-                var res = tx.executeSql( "SELECT * FROM articles WHERE 1=1" + where + order );
+                var res = tx.executeSql( "SELECT * FROM articles WHERE 1=1 " + where + order );
                 for ( var i = 0; i < res.rows.length; ++i ) {
                     articles.push( res.rows[i] );
                 }
             }
             catch( e ) {
+                console.debug(e);
             }
 
             cb( articles, err );
@@ -291,7 +292,7 @@ function getArticles( cb, filter, sortOrder, sortAsc )
     );
 }
 
-function articleExists( server, id, cb )
+function articleExists( id, cb )
 {
     var db = getDatabase();
 
@@ -301,7 +302,7 @@ function articleExists( server, id, cb )
             var err = null;
 
             try {
-                var res = tx.executeSql( "SELECT COUNT(*) AS count FROM articles WHERE id=? AND server=?", [ id, server ] );
+                var res = tx.executeSql( "SELECT COUNT(*) AS count FROM articles WHERE id=?", [ id ] );
                 if ( res.rows.length === 1 ) {
                     exists = ( res.rows[0].count === 0 ? false : true );
                 }
@@ -345,8 +346,9 @@ function _insertArticle( props )
 
     db.transaction(
         function( tx ) {
+            try {
             tx.executeSql(
-                            "INSERT INTO articles(id,created,updated,mimetype,language,readingTime,url,domain,archived,starred,title,content) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                            "INSERT INTO articles(id,created,updated,mimetype,language,readingTime,url,domain,archived,starred,title,content) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
                             [
                                 props.id,
                                 props.created,
@@ -362,6 +364,9 @@ function _insertArticle( props )
                                 props.content
                             ]
                          );
+               } catch (e)  {
+                    console.debug(e);
+                }
         }
     );
 }
@@ -687,6 +692,7 @@ function getDatabase()
 
 function checkDatabaseStatus( db )
 {
+    console.debug(db.version);
     if ( db.version === "" ) {
         createLatestDatabase( db );
     }

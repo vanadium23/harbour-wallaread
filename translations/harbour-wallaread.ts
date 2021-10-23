@@ -61,6 +61,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Failed to upload article: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Failed to set star status on article: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -70,10 +74,6 @@
     </message>
     <message>
         <source>Failed to delete article: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to upload article: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

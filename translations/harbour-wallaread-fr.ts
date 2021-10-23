@@ -54,27 +54,27 @@
     <name>Server</name>
     <message>
         <source>Failed to connect to server: </source>
-        <translation>Échec de la connexion au serveur : </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Failed to download articles: </source>
-        <translation>Échec du téléchargement des articles : </translation>
-    </message>
-    <message>
-        <source>Failed to set star status on article: </source>
-        <translation>Échec de la mise en favoris de l&apos;article : </translation>
-    </message>
-    <message>
-        <source>Failed to set read status on article: </source>
-        <translation>Échec du passage au statut lu de l&apos;article : </translation>
-    </message>
-    <message>
-        <source>Failed to delete article: </source>
-        <translation>Échec de la suppression de l&apos;article : </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Failed to upload article: </source>
-        <translation>Échec de l&apos;envoi de l&apos;article : </translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to set star status on article: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to set read status on article: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to delete article: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

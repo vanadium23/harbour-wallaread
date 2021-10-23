@@ -28,7 +28,6 @@ Item {
     id: server
 
     property string name
-    property string url
     property int lastSync: 0
     property string accessToken
     property string refreshToken
@@ -84,7 +83,7 @@ Item {
                     cb()
                 }
                 else {
-                    WallaBase.syncDeletedArticles( { token: accessToken, url: url }, function() { cb(); } )
+                    WallaBase.syncDeletedArticles( { token: accessToken, url: settings.base_url }, function() { cb(); } )
                 }
             }
         )
@@ -101,7 +100,7 @@ Item {
                 }
                 else {
                     console.debug( "Downloading articles changes since last sync" )
-                    var props = { url: url, since: lastSync, accessToken: accessToken, archive: fetchUnread ? 1 : 0 }
+                    var props = { url: settings.base_url, since: lastSync, accessToken: accessToken, archive: fetchUnread ? 1 : 0 }
                     WallaBase.downloadArticles( props, onGetUpdatedArticlesDone )
                 }
             }
@@ -137,8 +136,6 @@ Item {
                 WallaBase.saveArticle( article )
                 ret.push( article )
             }
-
-//            WallaBase.setServerLastSync( serverId, Math.floor( (new Date).getTime() / 1000 ) )
         }
 
         articlesDownloaded( ret )
@@ -153,7 +150,7 @@ Item {
                 }
                 else {
                     console.debug( "Sending a new article" )
-                    var props = { url: url, token: accessToken }
+                    var props = { url: settings.base_url, token: accessToken }
                     WallaBase.uploadNewArticle(
                         props,
                         articleUrl,
