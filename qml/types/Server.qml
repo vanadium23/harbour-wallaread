@@ -49,7 +49,6 @@ Item {
             WallaBase.connectToServer(
                 settings,
                 function( props, err ) {
-                    props.url = settings.base_url;
                     onConnectionDone( props, err, cb )
                 }
             )
@@ -198,7 +197,7 @@ Item {
                     cb( false )
                 }
                 else {
-                    var articleUrl = url
+                    var articleUrl = settings.base_url;
                     if ( articleUrl.charAt( articleUrl.length - 1 ) !== "/" )
                         articleUrl += "/"
                     articleUrl += "api/entries/" + article.id + ".json"
@@ -229,7 +228,7 @@ Item {
         else {
             console.debug( "Done toggling starred status for article " + article.id )
             var json = JSON.parse( content )
-            WallaBase.setArticleStar( serverId, article.id, json.is_starred )
+            WallaBase.setArticleStar( article.id, json.is_starred )
         }
     }
 
@@ -241,7 +240,7 @@ Item {
                     cb( false )
                 }
                 else {
-                    var articleUrl = url
+                    var articleUrl = settings.base_url;
                     if ( articleUrl.charAt( articleUrl.length - 1 ) !== "/" )
                         articleUrl += "/"
                     articleUrl += "api/entries/" + article.id + ".json"
@@ -272,7 +271,7 @@ Item {
         else {
             console.debug( "Done toggling archived status for article " + article.id )
             var json = JSON.parse( content )
-            WallaBase.setArticleRead( serverId, article.id, json.is_archived )
+            WallaBase.setArticleRead( article.id, json.is_archived )
         }
     }
 
@@ -284,7 +283,7 @@ Item {
                     cb( false )
                 }
                 else {
-                    var articleUrl = url
+                    var articleUrl = settings.base_url;
                     if ( articleUrl.charAt( articleUrl.length - 1 ) !== "/" )
                         articleUrl += "/"
                     articleUrl += "api/entries/" + id + ".json"
@@ -311,7 +310,7 @@ Item {
         }
         else {
             console.debug( "Done deleting article " + id )
-            WallaBase.deleteArticle( serverId, id )
+            WallaBase.deleteArticle( id )
         }
     }
 }

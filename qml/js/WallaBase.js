@@ -398,14 +398,14 @@ function _updateArticle( props )
     );
 }
 
-function deleteArticle( server, id )
+function deleteArticle( id )
 {
     var db = getDatabase();
 
     db.transaction(
         function( tx ) {
             console.debug( "Delete article " + id + " from database" );
-            tx.executeSql( "DELETE FROM articles WHERE id=? AND server=?", [ id, server ] );
+            tx.executeSql( "DELETE FROM articles WHERE id=?", [ id ] );
         }
     );
 }
@@ -650,24 +650,24 @@ function _embedImages( article, cb )
     _timerSource.setTimeout( _processImagesList, 100 );
 }
 
-function setArticleStar( server, id, star )
+function setArticleStar( id, star )
 {
     var db = getDatabase();
 
     db.transaction(
         function( tx ) {
-            tx.executeSql( "UPDATE articles SET starred=? WHERE id=? AND server=?", [ star, id, server ] );
+            tx.executeSql( "UPDATE articles SET starred=? WHERE id=?", [ star, id ] );
         }
     );
 }
 
-function setArticleRead( server, id, read )
+function setArticleRead( id, read )
 {
     var db = getDatabase();
 
     db.transaction(
         function( tx ) {
-            tx.executeSql( "UPDATE articles SET archived=? WHERE id=? AND server=?", [ read, id, server ] );
+            tx.executeSql( "UPDATE articles SET archived=? WHERE id=?", [ read, id ] );
         }
     );
 }
