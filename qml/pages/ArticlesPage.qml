@@ -327,7 +327,7 @@ Page {
         }
 
         header: PageHeader {
-            title: server.name
+            title: "Articles (" + articlesModel.count + ")"
         }
 
         ViewPlaceholder {
@@ -385,7 +385,7 @@ Page {
                             serverPage.server.toggleArticleStar(
                                 model,
                                 function( success ) {
-                                    articleMenu.hide()
+                                    articleMenu.close()
                                     if ( success )
                                         serverPage.updateArticlesList()
                                 }
@@ -403,7 +403,7 @@ Page {
                             serverPage.server.toggleArticleRead(
                                 model,
                                 function( success ) {
-                                    articleMenu.hide()
+                                    articleMenu.close()
                                     if ( success )
                                         serverPage.updateArticlesList()
                                 }
@@ -416,7 +416,7 @@ Page {
                         icon.source: "image://theme/icon-m-delete"
 
                         onClicked: {
-                            articleMenu.hide()
+                            articleMenu.close()
                             listEntry.showRemorse( index )
                         }
                     }

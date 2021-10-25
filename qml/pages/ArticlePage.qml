@@ -24,16 +24,96 @@ import Sailfish.WebView 1.0
 import Sailfish.WebEngine 1.0
 import Sailfish.Silica 1.0
 
+import "../types"
+
 WebViewPage {
     id: articlePage
     allowedOrientations: Orientation.All
 
+    property int id
     property string title
     property string content
+    property int archived
+    property int starred
+
+    property alias server: server
+
+    Server {
+        id: server
+
+        onError: {
+            showError( message )
+        }
+    }
+
+
+    Row {
+        id: actionsRow
+        width: parent.width
+        spacing: Theme.paddingLarge
+        x: ( width / 2 ) - ( ( 2 * spacing + starButton.width + toggleReadButton.width + deleteButton.width ) / 2 )
+
+        IconButton {
+            id: starButton
+            icon.source: articlePage.starred ? "image://theme/icon-m-favorite-selected" : "image://theme/icon-m-favorite"
+
+            onClicked: {
+                starButton.enabled = false
+
+                articlePage.server.toggleArticleStar(
+                    { id: id, starred: starred },
+                    function( success ) {
+                        articlePage.starred = articlePage.starred ? 0 : 1;
+                        starButton.enabled = true;
+                    }
+                )
+            }
+        }
+
+        IconButton {
+            id: toggleReadButton
+            icon.source: "image://theme/icon-m-acknowledge" + ( articlePage.archived ? "?" + Theme.secondaryColor : "" )
+
+            onClicked: {
+                toggleReadButton.enabled = false
+
+                articlePage.server.toggleArticleRead(
+                    { id: id, archived: archived },
+                    function( success ) {
+                        articlePage.archived = articlePage.archived ? 0 : 1;
+                        toggleReadButton.enabled = true;
+                    }
+                )
+            }
+        }
+
+        IconButton {
+            id: deleteButton
+            icon.source: "image://theme/icon-m-delete"
+
+            onClicked: {
+                articlePage.server.deleteArticle(
+                    id,
+                    function( success ) {
+                        if ( !success ) {
+                            showError( err )
+                        } else {
+                            var page = pageStack.push( Qt.resolvedUrl( "ArticlesPage.qml" ) )
+                        }
+                    }
+                )
+            }
+        }
+    }
 
     WebView {
         id: webview
-        anchors.fill: parent
+        anchors {
+            top: actionsRow.bottom
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+        }
 
         Component.onCompleted: {
             loadHtml( wrapArticleContent() )
