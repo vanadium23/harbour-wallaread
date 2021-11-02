@@ -44,6 +44,7 @@ HEADERS += \
 DISTFILES += \
     qml/common/Settings.qml \
     qml/js/WallaBase.js \
+    qml/js/database.js \
     qml/js/sha1.js \
     qml/models/ArticlesModel.qml \
     qml/pages/ArticlePage.qml \
